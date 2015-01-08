@@ -65,7 +65,7 @@ Dialog.prototype = {
 
 	//创建遮罩
 	createMask: function(){
-		if(!this.options.mask )return;
+		if(!this.options.mask)return;
 
 		this.mask = new Mask({autoOpen: false, container: this.wraper});
 	},
@@ -205,16 +205,6 @@ Dialog.prototype = {
 	destory: function(){
 		this.mask && this.mask.destory();
 		this.container.remove();
-	},
-
-	//禁用button
-	disabledButton: function(index){
-		this.container.find('.ui-dialog-button').eq(index).addClass('ui-dialog-button-disabled');
-	},
-
-	//开启button使用
-	enabledButton: function(){
-		this.container.find('.ui-dialog-button').removeClass('ui-dialog-button-disabled');
 	}
 };
 
