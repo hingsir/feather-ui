@@ -24,6 +24,9 @@ feather前端模块化组件库
 * [LightBox](/mod/lightbox)
 * [Draggable](/mod/Draggable)
 * [Calendar](/mod/calendar)
+* [Suggestion](/mod/suggestion)
+* [Tooltip](/mod/tooltip)
+* [Droplist](/mod/droplist)
 
 ###注：
 * 所有的组件遵循模块化书写方式, 并可直接移植至nodejs环境
