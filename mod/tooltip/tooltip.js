@@ -144,7 +144,7 @@ Tooltip.prototype.getPos = function(pos, center){
 	return result;
 };
 
-Tooltip.ARROW_WIDTH = 8;
+Tooltip.ARROW_WIDTH = 5;
 Tooltip.NOT_CENTER_OFFSET = 25 + Tooltip.ARROW_WIDTH;
 
 Tooltip.getPosName = function(pos){

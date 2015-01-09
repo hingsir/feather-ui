@@ -5,7 +5,9 @@ var tabs = function(opt){
         dom: null,
         attr: 'href',
         currentclass: '',
+        currentClass: '',
         currentindex: 0,
+        currentIndex: 0,
         event: 'click',
         callback: function(){}
     }, opt || {});
@@ -31,11 +33,11 @@ tabs.prototype = {
         
         self.targets = $(self.targets);
         self.bind();
-        self.tabTo(opt.currentindex);
+        self.tabTo(opt.currentindex || opt.currentIndex);
     },
     
     bind: function(){
-        var self = this, opt = self.options, cc = opt.currentclass;
+        var self = this, opt = self.options, cc = opt.currentclass || opt.currentClass;
 
         $.each(self.doms, function(index, item){
             $(item).bind(opt.event, function(){

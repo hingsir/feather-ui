@@ -133,7 +133,7 @@ Dialog.prototype = {
 
 			var $button = $('<a href="javascript:void(0);" class="ui-dialog-button" />').text(index).appendTo($buttons);
 
-			item.classname && $button.addClass(item.classname);
+			$button.addClass(item.classname || item.className);
 
 			$.each(item.events, function(index, callback){
 				$button.bind(index, function(){
