@@ -1,5 +1,6 @@
 var $ = require('jquery'), Mask = require('mask'), Dialog = require('dialog');
 
+
 function Tips(opt){
 	this.options = $.extend({
 		content: '',
