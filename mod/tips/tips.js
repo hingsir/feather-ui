@@ -34,10 +34,6 @@ Tips.prototype = {
 		}
 	},
 
-	destory: function(){
-		this.destroy();
-	},
-
 	destroy: function(){
 		this.$.destroy();
 		clearTimeout(this.id);
