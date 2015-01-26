@@ -1,4 +1,4 @@
-var $ = require('jquery'), util = require('util');
+var $ = require('common:jquery'), util = require('common:util');
 
 function Suggestion(opts){
 	this.options = $.extend({

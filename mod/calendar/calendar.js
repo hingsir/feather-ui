@@ -1,4 +1,4 @@
-var $ = require('jquery'), util = require('util'), toPad = util.string.toPad, body = document.body;
+var $ = require('common:jquery'), util = require('common:util'), toPad = util.string.toPad, body = document.body;
 
 var Calendar = module.exports = function(options){
 	this.options = $.extend({

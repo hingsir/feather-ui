@@ -1,4 +1,4 @@
-var $ = require('jquery'), toInt = require('util').string.toInt;
+var $ = require('common:jquery'), toInt = require('common:util').number.toInt;
 
 var Draggable = module.exports = function(opt){
     this.options = $.extend({
