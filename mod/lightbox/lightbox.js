@@ -1,4 +1,4 @@
-var $ = require('jquery'), Mask = require('mask'), body = document.body, Math = window.Math;
+var $ = require('common:jquery'), Mask = require('common:mask'), body = document.body, Math = window.Math;
 
 /*
 var l = new LightBox({
@@ -145,8 +145,8 @@ Lightbox.prototype = {
 		this.container.hide();
 	},
 
-	destory: function(){
-		this.mask.destory();
+	destroy: function(){
+		this.mask.detroy();
 		this.container.remove();
 		this.items.length = 0;
 	}

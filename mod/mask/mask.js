@@ -1,4 +1,4 @@
-var $ = require('jquery'), doc = document, body = doc.body;
+var $ = require('common:jquery'), doc = document, body = doc.body;
 
 function Mask(opt){
 	this.options = $.extend({
@@ -43,7 +43,11 @@ Mask.prototype = {
 	},
 
 	destory: function(){
-		this.mask.remove();
+		this.destroy();
+	},
+
+	destroy: function(){
+		this.mask.remove();	
 	}
 };
 

@@ -1,5 +1,10 @@
 .ui-alert{
-	font-size: 20px;
+	font-size: 14;
 	text-align: center;
 	padding: 20px;
+}
+
+.ui-alert-button-cancel{
+	background: #ebebeb;
+	color: #333;
 }

@@ -9,6 +9,7 @@
 
 .ui-formvalid-field-error{
 	background-position: 0px -6px;
+	color:#EA3200;
 }
 
 .ui-formvalid-field-success{

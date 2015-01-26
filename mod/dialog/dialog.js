@@ -1,4 +1,4 @@
-var $ = require('jquery'), Mask = require('mask');
+var $ = require('common:jquery'), Mask = require('common:mask');
 
 function Dialog(opt){
 	this.options = $.extend({
@@ -203,7 +203,11 @@ Dialog.prototype = {
 	},
 
 	destory: function(){
-		this.mask && this.mask.destory();
+		this.destroy();
+	},
+
+	destroy: function(){
+		this.mask && this.mask.destroy();
 		this.container.remove();
 	}
 };

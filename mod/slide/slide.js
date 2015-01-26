@@ -1,4 +1,4 @@
-var $ = require('jquery')//, Draggable = require('draggable');
+var $ = require('common:jquery')//, Draggable = require('draggable');
 
 var Slide = module.exports = function(opt) {
 	this.options = $.extend({

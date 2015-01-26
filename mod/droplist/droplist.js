@@ -1,4 +1,4 @@
-var $ = require('jquery');
+var $ = require('common:jquery');
 
 function DropList(opt){
 	this.options = $.extend({

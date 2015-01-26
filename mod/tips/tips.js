@@ -1,4 +1,4 @@
-var $ = require('jquery'), Mask = require('mask'), Dialog = require('dialog');
+var $ = require('common:jquery'), Mask = require('common:mask'), Dialog = require('common:dialog');
 
 function Tips(opt){
 	this.options = $.extend({
@@ -14,7 +14,7 @@ Tips.prototype = {
 	init: function(){
 		var self = this, opt = self.options;
 
-		Tips.destory(); Tips.instance = self;
+		Tips.destroy; Tips.instance = self;
 
 		self.$ = new Dialog({
 			autoOpen: true,
@@ -34,16 +34,20 @@ Tips.prototype = {
 	},
 
 	destory: function(){
-		this.$.destory();
+		this.destroy();
+	},
+
+	destroy: function(){
+		this.$.destroy();
 		clearTimeout(this.id);
 	}
 };
 
 Tips.instance = null;
 
-Tips.destory = function(){
+Tips.destroy = function(){
 	if(Tips.instance){
-		Tips.instance.destory();
+		Tips.instance.destroy();
 	}
 };
 

@@ -1,4 +1,4 @@
-var $ = require('jquery'), proxy = $.proxy, body = document.body;
+var $ = require('common:jquery'), proxy = $.proxy, body = document.body;
 
 function Tooltip(opt){
 	this.options = $.extend({

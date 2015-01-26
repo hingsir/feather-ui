@@ -18,7 +18,7 @@ require.async('upload', function(Upload){
 </script>
 */
 
-var $ = require('jquery');
+var $ = require('common:jquery');
 
 require('./lib/uploadify.js');
 

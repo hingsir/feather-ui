@@ -1,4 +1,4 @@
-var $ = require('jquery');
+var $ = require('common:jquery');
 var pluses = /\+/g;
 
 function read(s) {
