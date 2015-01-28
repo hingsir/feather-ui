@@ -2,7 +2,7 @@ var $ = require('common:jquery'), util = require('common:util'), toPad = util.st
 
 var Calendar = module.exports = function(options){
 	this.options = $.extend({
-		dom: body,
+		container: body,
 		target: null,
 		handle: null,
 		maxDate: null,
@@ -26,9 +26,9 @@ Calendar.prototype = {
 		}
 
 		self.wraper = $('<div class="ui-calendar"></div>');
-		self.dom = $(self.options.dom).append(self.wraper);
+		self.container = $(self.options.container).append(self.wraper);
 
-		self.dom[0] == body && self.wraper.css('position', 'absolute');
+		self.container[0] == body && self.wraper.css('position', 'absolute');
 
 		if(opt.minDate){
 			self.minDate = typeof opt.minDate == 'string' ? opt.minDate : self.getDate(opt.minDate);
@@ -49,12 +49,12 @@ Calendar.prototype = {
 		if($handle){
 			$handle.click(function(){
 				self.open();
-				self.reset();
+				self.resetPosition();
 			});
 		}
 
 		$(window).on('resize scroll', function(){
-			self.reset();
+			self.resetPosition();
 		});
 
 		self.wraper.click(function(e){
@@ -92,7 +92,7 @@ Calendar.prototype = {
 
 		self.createCalendar();
 		self.options.callback && self.options.callback.call(self);
-		self.reset();
+		self.resetPosition();
 	},
 
 	createCalendar: function(){
@@ -160,14 +160,14 @@ Calendar.prototype = {
 
 	open: function(){
 		this.wraper.show();
-		this.reset();
+		this.resetPosition();
 	},
 
 	close: function(){
 		this.wraper.hide();
 	},
 
-	reset: function(){
+	resetPosition: function(){
 		if(!this.target) return;
 
 		var self = this, offset = self.target.offset(), scrollTop = document.body.scrollTop || document.documentElement.scrollTop, top;

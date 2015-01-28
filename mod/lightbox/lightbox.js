@@ -64,7 +64,7 @@ Lightbox.prototype = {
 		});
 
 		$(window).resize(function(){
-			self.reset();
+			self.resetPosition();
 		});
 
 		self.bottom.find('.ui-lightbox-close').click(function(){
@@ -80,7 +80,7 @@ Lightbox.prototype = {
 		});
 	},
 
-	reset: function(){
+	resetPosition: function(){
 		this.container.css('left', parseInt(($(window).width() - this.container.outerWidth())/2));
 	},
 
@@ -114,7 +114,7 @@ Lightbox.prototype = {
 			width: width,
 			left: '-=' + (width - _width)/2
 		}, time * abs(width - _width)/max(width, _width), function(){
-			self.reset();
+			self.resetPosition();
 			$content
 				.animate({height: height}, time2 = time * abs(height - _height)/max(height, _height))
 				.animate({opacity: 1}, time, function(){
@@ -136,7 +136,7 @@ Lightbox.prototype = {
 
 		self.mask.open();
 		self.container.show();
-		self.reset();
+		self.resetPosition();
 		self.load(self.index = index == null ? self.index : index);
 	},
 

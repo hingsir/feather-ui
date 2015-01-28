@@ -4,7 +4,7 @@
 	padding: 20px;
 }
 
-.ui-alert-button-cancel{
+.ui-alert-button-cancel, .ui-alert-button-cancel:hover{
 	background: #ebebeb;
 	color: #333;
 }

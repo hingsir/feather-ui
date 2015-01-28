@@ -1,9 +1,9 @@
-var $ = require('common:jquery'), Mask = require('common:mask');
+var $ = require('common:jquery'), Mask = require('common:mask'), body = document.body;
 
 function Dialog(opt){
 	this.options = $.extend({
 		title: '',
-		container: document.body,
+		container: body,
 		dom: null,
 		width: 400,
 		height: false,
@@ -27,8 +27,10 @@ Dialog.prototype = {
 		this.firstOpenStatus = false;
 
 		var wraper = this.wraper = $(this.options.container);
-		!/fixed|absolute/.test(wraper.css('position')) && wraper.css('position', 'relative');
 
+		if(wraper[0] != body){
+			!/fixed|absolute/.test(wraper.css('position')) && wraper.css('position', 'relative');
+		}
 
 		this.create();
 		this.options.autoOpen && this.open();
@@ -46,13 +48,8 @@ Dialog.prototype = {
 		var t = this;
 
 		$(window).resize(function(){
-			t.reset();
+			t.resetPosition();
 		});
-
-		setTimeout(function(){
-			t.reset();
-		}, 0);
-
 
 		if(this.options.handle){
 			var t = this;
@@ -86,8 +83,8 @@ Dialog.prototype = {
 		    ].join(''));
 		}
 
-		this.createContent();
 		this.createButtons();
+		this.setContent();
 
 		$container.find('.ui-dialog-content').css({
 			width: this.options.width,
@@ -97,20 +94,29 @@ Dialog.prototype = {
 		$container.css('width', this.options.width);
 	},
 
-	createContent: function(){
-		var t = this, options = t.options;
-
+	setContent: function(content){
+		var t = this, options = t.options, content = content || options.content;
 		var $content = t.container.find('.ui-dialog-content');
 
-		if(options.content){
-			$content.html(options.content);
+		if(content){
+			$content.html(content);
 		}else if(options.dom){
-			$content.append($(options.dom).show());
+			$content.empty().append($(options.dom).show());
 		}else if(options.url){
-			$content.load(options.url, function(){
-				t.reset();
-			});
+			t.load(options.url);
 		}
+
+		setTimeout(function(){
+			t.resetPosition();
+		}, 0);
+	},
+
+	load: function(url){
+		var self = this;
+
+		self.container.find('.ui-dialog-content').load(url, function(){
+			self.resetPosition();
+		});
 	},
 
 	createButtons: function(){
@@ -164,12 +170,12 @@ Dialog.prototype = {
 		this.container.find('.ui-dialog-title').text(title);
 	},
 
-	reset: function(){
-		this.mask && this.mask.reset();
+	resetPosition: function(){
+		this.mask && this.mask.resetPosition();
 
 		var wraper = this.wraper[0], position;
 
-		if(wraper === document.body){
+		if(wraper === body){
 			position = 'fixed';
 			wraper = window;
 		}else{
@@ -186,7 +192,7 @@ Dialog.prototype = {
 	open: function(){
 		this.mask && this.mask.open();
 		this.container.show();
-		this.reset();
+		this.resetPosition();
 
 		if(this.firstOpenStatus && $.isFunction(this.options.firstOpen)){
 			this.firstOpenStatus = true;

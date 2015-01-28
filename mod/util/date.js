@@ -25,14 +25,14 @@ module.exports = {
 	date: function(str, time){
 		if( !str ) return ;
 
-		var date = new Date, temp = [], toPad = util.string.toPad;
+		var date = new Date, temp = [];
 
-		if( time ) date.setTime( time );
+		if(time) date.setTime(time);
 
-		for( var i = 0, j = str.length; i < j; i++ ){
+		for(var i = 0, j = str.length; i < j; i++){
 			var value = str.charAt(i);
 
-			switch( value ){
+			switch(value){
 				case 'Y': value = date.getFullYear(); break;
 				case 'y': value = String(date.getFullYear()).substring(0, 2); break;
 				case 'm': value = toPad(date.getMonth() + 1, 0, 2, true); break;
@@ -51,7 +51,7 @@ module.exports = {
 				default: ;
 			};
 
-			temp.push( value );
+			temp.push(value);
 		}
 
 		return temp.join('');

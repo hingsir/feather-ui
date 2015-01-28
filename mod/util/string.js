@@ -1,4 +1,4 @@
-var CryptoJS = require('./lib/crypto.js');
+var CryptoJS = require('./lib/crypto.js'), base64 = require('./lib/base64.js');
 var object = require('./object.js');
 
 module.exports = {
@@ -58,6 +58,18 @@ module.exports = {
 		return string;
 	},
 
+	base64Encode: function(str){
+		return base64.btoa(str);
+	},
+
+	base64Decode: function(str){
+		return base64.atob(str);
+	},
+
+	crypto: CryptoJS,
+
 	toJSONString: object.toJSONString,
-	parseJSON: object.parseJSON
+	jsonEncode: object.toJSONString,
+	parseJSON: object.parseJSON,
+	jsonDecode: object.parseJSON
 };

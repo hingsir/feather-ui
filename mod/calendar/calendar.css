@@ -5,6 +5,7 @@
 	display: inline-block;
 	background: white;
 	font-family: consolas;
+	font-size: 12px;
 }
 
 .ui-calendar-container{

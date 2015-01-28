@@ -13,19 +13,21 @@ Mask.prototype = {
 	init: function(){
 		var self = this, container = self.container = $(self.options.container);
 
-		!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
-
+		if(container[0] != body){
+			!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
+		}
+		
 		self.mask = $('<div class="ui-mask">').hide().appendTo(self.container);
 
 		self.options.autoOpen && this.open();
 
 		$(window).resize(function(){
-			self.reset();
+			self.resetPosition();
 		});
 	},
 
 	open: function(){
-		this.reset();
+		this.resetPosition();
 		this.mask.show();
 	},
 
@@ -33,7 +35,7 @@ Mask.prototype = {
 		this.mask.hide();
 	},
 
-	reset: function(){
+	resetPosition: function(){
 		var container = this.container[0];
 
 		this.mask.css({

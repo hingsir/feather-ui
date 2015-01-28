@@ -18,7 +18,7 @@ require.async('upload', function(Upload){
 </script>
 */
 
-var $ = require('common:jquery');
+var $ = require('common:jquery'), Cookie = require('common:cookie');
 
 require('./lib/uploadify.js');
 
@@ -30,6 +30,7 @@ var Upload = module.exports = function(opt){
 		width: this.dom.width(),
 		height: this.dom.height(),
 		buttonText: '选择文件',
+		fixedCookie: false,
 		overrideEvents: [
 			'onUploadProgress', 'onUploadComplete', 'onUploadSuccess', 'onUploadStart', 'onUploadError', 
 			'onSelect'
@@ -41,7 +42,13 @@ var Upload = module.exports = function(opt){
 
 Upload.prototype = {
 	init: function(){
-		this.dom.uploadify(this.options);
+		var self = this, options = self.options;
+
+		if(options.fixedCookie){
+			options.formData = $.extend(options.formData || {}, Cookie.get() || {});
+		}
+
+		self.dom.uploadify(options);
 	}
 };
 

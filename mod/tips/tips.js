@@ -29,7 +29,7 @@ Tips.prototype = {
 
 		if(typeof opt.timeout == 'number'){
 			self.id = setTimeout(function(){
-				self.destory();
+				self.destroy();
 			}, opt.timeout);	
 		}
 	},

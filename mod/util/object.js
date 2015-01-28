@@ -1,4 +1,6 @@
-module.exports = {
+var json2 = require('./lib/json2.js');
+
+var object = module.exports = {
 	get: function(data, name){
 		if(data[name]){
 			return data[name];
@@ -40,46 +42,18 @@ module.exports = {
 	},
 
 	toJSONString: function(obj){
-		// if('JSON' in window){
-		// 	return JSON.stringify(obj);			
-		// }else{
-			if(typeof obj == 'undefined'){
-				return ;
-			}
+		return json2.stringify(obj);
+	},
 
-			if(obj.constructor == Array){
-				var tmp = [], i = 0, j = obj.length;
-
-				for(; i < j; i++){
-					tmp.push(this.toJSONString(obj[i]));
-				}
-
-				return '[' + tmp.join(',') + ']';
-			}
-
-			if(typeof obj == 'object' && obj){
-				var tmp = [];
-
-				for(var i in obj){
-                	obj.hasOwnProperty(i) && tmp.push('"' + i + '":' + this.toJSONString(obj[i]));
-				}
-
-				return "{" + tmp.join(',') + "}";
-			}
-
-			if(typeof obj == 'function'){
-				return ;
-			}
-			
-			return String(obj);
-		//}
+	jsonEncode: function(obj){
+		return this.toJSONString(obj);
 	},
 
 	parseJSON: function(str){
-		// if('JSON' in window){
-		// 	return JSON.parse(str);
-		// }else{
-			return (new Function('return ' + str))();
-		//}
+		return json2.parse(str);
+	},
+
+	jsonDecode: function(str){
+		return this.parseJSON(str);
 	}
 };
