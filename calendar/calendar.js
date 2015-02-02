@@ -82,7 +82,6 @@ Calendar.prototype = {
 	},
 
 	prevMonth: function(){
-
 		this.toMonth(this.year, this.month - 1);
 	},
 
@@ -95,7 +94,7 @@ Calendar.prototype = {
 
 		year && date.setFullYear(year);
 
-		if(month){
+		if(month != null){
 			date.setDate(1);
 			date.setMonth(month);
 		}
