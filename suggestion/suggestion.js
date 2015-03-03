@@ -12,7 +12,8 @@ function Suggestion(opts){
 		requestParams: {},
 		resultField: '',
 		match: null,
-		format: null
+		format: null,
+		callback: function(){}
 	}, opts || {});
 
 	this.init();
@@ -41,7 +42,17 @@ Suggestion.prototype = {
 		var self = this, opts = self.options;
 
 		self.dom.on('keyup paste cut', function(e){
-			!Suggestion.isUDEvent(e) && self.match();
+			if(e.keyCode == 13){
+				var $current = self.suggest.find('.ui-suggestion-active');
+
+				if($current.length){
+					self.setKw($current.attr('data-suggestion-kw'), true);
+				}
+
+				return self.close();
+			}else{
+				!Suggestion.isUDEvent(e) && self.match();
+			}
 		}).focus(function(){
 			self.match();
 		}).keydown(function(e){
@@ -53,12 +64,15 @@ Suggestion.prototype = {
 		});
 
 		self.suggest.delegate('.ui-suggestion-item', 'click', function(){
-			self.setKw($(this).attr('data-suggestion-kw'));
+			self.setKw($(this).attr('data-suggestion-kw'), true);
 		});
 	},
 
-	setKw: function(kw){
-		this.dom.val(kw);
+	setKw: function(value, execCallback){
+		var self = this;
+
+		self.dom.val(value);
+		execCallback && self.options.callback && self.options.callback.call(self, value);
 	},
 
 	switchKw: function(e){
@@ -126,9 +140,9 @@ Suggestion.prototype = {
 						data = util.object.get(data, opts.resultField) || [];
 					}
 					
-					Suggestion.cache[kw] = data;
+					data = Suggestion.cache[kw] = self._match.call(self, data, kw);
 
-					self.build(self._match.call(self, data, kw), kw);
+					self.build(data, kw);
 				});
 			}
 		}, opts.delay);	
