@@ -1,4 +1,16 @@
-var $ = require('common:jquery');
+;(function(window, factory){
+if(typeof define == 'function'){
+    //seajs or requirejs environment
+    define(function(require, exports, module){
+        return factory(
+            require('common:jquery')
+        );
+    });
+}else{
+    window.FeatherUi = window.FeatherUi || {};
+    window.FeatherUi.FormValid = factory(window.jQuery || window.$);
+}
+})(window, function($){
 
 function FormValid(opt){
 	this.options = $.extend({
@@ -179,3 +191,5 @@ $.extend(FormValid, {
 FormValid.ATTRIBUTE_DEFAULT = FormValid.ATTRIBUTE_PREFIX + 'default';
 
 return FormValid;
+
+});

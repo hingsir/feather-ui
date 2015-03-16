@@ -1,9 +1,23 @@
-var $ = require('common:jquery'), doc = document, body = doc.body;
+;(function(window, factory){
+if(typeof define == 'function'){
+	//seajs or requirejs environment
+	define(function(require, exports, module){
+		return factory(
+			require('common:jquery')
+		);
+	});
+}else{
+	window.FeatherUi = window.FeatherUi || {};
+	window.FeatherUi.Mask = factory(window.jQuery || window.$);
+}
+})(window, function($){
+
+var doc = document;
 
 function Mask(opt){
 	this.options = $.extend({
 		autoOpen: true,
-		container: body
+		container: doc.body
 	}, opt || {});
 
 	this.init();
@@ -13,7 +27,7 @@ Mask.prototype = {
 	init: function(){
 		var self = this, container = self.container = $(self.options.container);
 
-		if(container[0] != body){
+		if(container[0] != doc.body){
 			!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
 		}
 		
@@ -54,3 +68,5 @@ Mask.prototype = {
 };
 
 return Mask;
+
+});

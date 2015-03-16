@@ -1,4 +1,16 @@
-var $ = require('common:jquery');
+;(function(window, factory){
+if(typeof define == 'function'){
+    //seajs or requirejs environment
+    define(function(require, exports, module){
+        return factory(
+            require('common:jquery')
+        );
+    });
+}else{
+    window.FeatherUi = window.FeatherUi || {};
+    window.FeatherUi.Page = factory(window.jQuery || window.$);
+}
+})(window, function($){
 
 function Page(opt){
     this.options = $.extend({
@@ -120,3 +132,5 @@ Page.prototype = {
 };	
 
 return Page;
+
+});

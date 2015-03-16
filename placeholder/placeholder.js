@@ -1,4 +1,16 @@
-var $ = require('common:jquery');
+;(function(window, factory){
+if(typeof define == 'function'){
+	//seajs or requirejs environment
+	define(function(require, exports, module){
+		return factory(
+			require('common:jquery')
+		);
+	});
+}else{
+	window.FeatherUi = window.FeatherUi || {};
+	window.FeatherUi.PlaceHolder = factory(window.jQuery || window.$);
+}
+})(window, function($){
 
 function PlaceHolder(opt){
 	this.options = $.extend({
@@ -64,4 +76,6 @@ PlaceHolder.isSupport = 'placeholder' in document.createElement('input');
 PlaceHolder.CACHE = [];
 PlaceHolder.GID = 1;
 
-module.exports = PlaceHolder;
+return PlaceHolder;
+
+});

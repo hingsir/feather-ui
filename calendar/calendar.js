@@ -1,8 +1,23 @@
-var $ = require('common:jquery'), util = require('common:util'), toPad = util.string.toPad, body = document.body;
+;(function(window, factory){
+if(typeof define == 'function'){
+	//seajs or requirejs environment
+	define(function(require, exports, module){
+		return factory(
+			require('common:jquery'),
+			require('common:util')
+		);
+	});
+}else{
+	window.FeatherUi = window.FeatherUi || {};
+	window.FeatherUi.Calendar = factory(window.jQuery || window.$, window.FeatherUi.Util);
+}
+})(window, function($, Util){
 
-var Calendar = module.exports = function(options){
+var toPad = Util.string.toPad, doc = document;
+
+var Calendar = function(options){
 	this.options = $.extend({
-		container: body,
+		container: doc.body,
 		target: null,
 		handle: null,
 		maxDate: null,
@@ -28,7 +43,7 @@ Calendar.prototype = {
 		self.wraper = $('<div class="ui-calendar"></div>');
 		self.container = $(self.options.container).append(self.wraper);
 
-		self.container[0] == body && self.wraper.css('position', 'absolute');
+		self.container[0] == doc.body && self.wraper.css('position', 'absolute');
 
 		if(opt.minDate){
 			self.minDate = typeof opt.minDate == 'string' ? opt.minDate : self.getDate(opt.minDate);
@@ -182,7 +197,7 @@ Calendar.prototype = {
 	resetPosition: function(){
 		if(!this.target) return;
 
-		var self = this, offset = self.target.offset(), scrollTop = document.body.scrollTop || document.documentElement.scrollTop, top;
+		var self = this, offset = self.target.offset(), scrollTop = doc.body.scrollTop || doc.documentElement.scrollTop, top;
 
 		if(scrollTop + $(window).height() < offset.top + self.wraper.outerHeight()){
 			top = offset.top - self.wraper.outerHeight() - 1;
@@ -197,10 +212,12 @@ Calendar.prototype = {
 	},
 
 	getDate: function(date){
-		return util.date.date(this.options.dateFormat, date.getTime());
+		return Util.date.date(this.options.dateFormat, date.getTime());
 	}
 };
 
 Calendar.WEEKNAME = ['日', '一', '二', '三', '四', '五', '六'];
 
 return Calendar;
+
+});
