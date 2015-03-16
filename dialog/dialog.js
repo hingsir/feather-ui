@@ -187,9 +187,9 @@ Dialog.prototype = {
 		$header.removeClass('.ui-dialog-header-nob').show();
 
 		if(title === false){
-			this.container.find('.ui-dialog-header').hide();
+			$header.hide();
 		}else if(title == ''){
-			this.container.find('.ui-dialog-header').addClass('ui-dialog-header-nob');
+			$header.addClass('ui-dialog-header-nob');
 		}
 
 		$header.find('.ui-dialog-title').html(title);
