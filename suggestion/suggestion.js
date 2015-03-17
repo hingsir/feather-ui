@@ -55,7 +55,7 @@ Suggestion.prototype = {
 	},
 
 	initEvent: function(){
-		var self = this, opts = self.options, hover = false;
+		var self = this, opts = self.options, over = false;
 
 		self.dom.on('keyup paste cut', function(e){
 			if(e.keyCode == 13){
