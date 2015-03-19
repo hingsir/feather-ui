@@ -205,8 +205,9 @@ Suggestion.prototype = {
 
 		self.index = null;
 
+		self.suggest.find('.ui-suggestion-item').remove();
+
 		if(!data.length){
-			self.suggest.empty();
 			self.items = null;
 			self.close();
 		}else{
@@ -216,7 +217,7 @@ Suggestion.prototype = {
 				html += '<li class="ui-suggestion-item" data-suggestion-index="' + key + '" data-suggestion-kw="' + item + '">' + self.format(item, kw) + '</li>';
 			});
 
-			self.suggest.find('.ui-suggestion-item').remove().end().append(html);
+			self.suggest.append(html);
 			self.items = self.suggest.find('.ui-suggestion-item');
 			self.open();
 		}
