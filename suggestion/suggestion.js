@@ -29,7 +29,8 @@ function Suggestion(opts){
 		match: null,
 		format: null,
 		switchCallback: function(){},
-		callback: function(){}
+		callback: function(){},
+		cancel: function(){}
 	}, opts || {});
 
 	this.init();
@@ -74,7 +75,10 @@ Suggestion.prototype = {
 		}).keydown(function(e){
 			Suggestion.isUDEvent(e) && self.switchKw(e);
 		}).blur(function(e){
-			!over && self.close();
+			if(!over){
+				self.close();
+				opts.cancel && opts.cancel.call(this);
+			}
 		});
 
 		self.suggest.delegate('.ui-suggestion-item', 'click', function(){
@@ -84,6 +88,10 @@ Suggestion.prototype = {
 			over = true;
 		}, function(){
 			over = false;
+		});
+
+		self.suggest.find('.ui-suggestion-title').click(function(){
+			self.dom.focus();
 		});
 	},
 
@@ -205,9 +213,8 @@ Suggestion.prototype = {
 
 		self.index = null;
 
-		self.suggest.find('.ui-suggestion-item').remove();
-
 		if(!data.length){
+			self.suggest.empty();
 			self.items = null;
 			self.close();
 		}else{
@@ -217,7 +224,7 @@ Suggestion.prototype = {
 				html += '<li class="ui-suggestion-item" data-suggestion-index="' + key + '" data-suggestion-kw="' + item + '">' + self.format(item, kw) + '</li>';
 			});
 
-			self.suggest.append(html);
+			self.suggest.find('.ui-suggestion-item').remove().end().append(html);
 			self.items = self.suggest.find('.ui-suggestion-item');
 			self.open();
 		}
