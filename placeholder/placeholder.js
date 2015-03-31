@@ -70,8 +70,8 @@ PlaceHolder.prototype = {
 		}
 
 		this.placeholder.css({
-			top: $dom.position().top + $dom.css('border-top-width'),
-			left: $dom.position().left + $dom.css('border-left-width')
+			top: $dom.position().top + parseInt($dom.css('border-top-width')),
+			left: $dom.position().left + parseInt($dom.css('border-left-width'))
 		}).val(text);
 	}
 };
