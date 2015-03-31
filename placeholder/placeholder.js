@@ -59,15 +59,19 @@ PlaceHolder.prototype = {
 				$dom.parent().css('position', 'relative');
 			}
 
-			this.placeholder = $('<input type="text" />').addClass($dom[0].className).insertAfter($dom).addClass('ui-placeholder').click(function(){
+			this.placeholder = $('<input type="text" />').css({
+				width: $dom.innerWidth(),
+				height: $dom.innerHeight(),
+				lineHeight: $dom.innerHeight() + 'px'
+			}).insertAfter($dom).addClass('ui-placeholder').click(function(){
 				$(this).hide();
 				$dom.focus();
 			});
 		}
 
 		this.placeholder.css({
-			top: $dom.position().top,
-			left: $dom.position().left
+			top: $dom.position().top + $dom.css('border-top-width'),
+			left: $dom.position().left + $dom.css('border-left-width')
 		}).val(text);
 	}
 };
