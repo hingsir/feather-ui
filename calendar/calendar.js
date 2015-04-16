@@ -22,6 +22,7 @@ var Calendar = function(options){
 		handle: null,
 		maxDate: null,
 		minDate: null,
+		yearRange: null,
 		dateFormat: 'Y-m-d',
 		callback: function(){},
 		onSelect: function(){
@@ -94,6 +95,14 @@ Calendar.prototype = {
 
 			e.stopPropagation();
 		});
+
+		self.wraper.delegate('.ui-calendar-year-select', 'change', function(){
+			self.toMonth(this.value);
+		});
+
+		self.wraper.delegate('.ui-calendar-month-select', 'change', function(){
+			self.toMonth(self.year, this.value);
+		});
 	},
 
 	prevMonth: function(){
@@ -165,7 +174,27 @@ Calendar.prototype = {
 	},
 
 	createCalendarHeader: function(){
-		var html = [], month = this.year + '.' + toPad(this.month + 1, 0, 2, true);
+		var html = [], date, self = this, yearRange = self.options.yearRange;
+
+		if(!yearRange){
+			date = self.year + '.' + toPad(self.month + 1, 0, 2, true);
+		}else{
+			yearRange = yearRange.split(':');
+
+			date = '<select class="ui-calendar-year-select">';
+
+			for(var start = Math.min(self.year, yearRange[0]), end = Math.max(self.year, yearRange[1]); start <= end; start++){
+				date += '<option value="' + start + '" ' + (self.year == start ? 'selected' : '') + '>' + start + '年</option>';
+			}
+
+			date += '</select><select class="ui-calendar-month-select">';
+
+			for(var i = 0; i < 12; i++){
+				date += '<option value="' + i + '" ' + (self.month == i ? 'selected' : '') + '>' + toPad(i + 1, 0, 2, true) + '月</option>';
+			}
+
+			date += '</select>';
+		}
 
 		$.each(Calendar.WEEKNAME, function(index, name){
 			html.push('<th>' + name + '</th>');
@@ -175,9 +204,9 @@ Calendar.prototype = {
 			'<thead>', 
 				'<tr class="ui-calendar-title">',
 					'<th colspan="7">',
-						'<a href="javascript:" class="ui-calendar-next"></a>',
-						'<a href="javascript:" class="ui-calendar-prev"></a>',
-						'<span class="ui-calendar-date">' + month + '</span>',
+						yearRange ? '' : '<a href="javascript:" class="ui-calendar-next"></a>',
+						yearRange ? '' : '<a href="javascript:" class="ui-calendar-prev"></a>',
+						'<span class="ui-calendar-date">' + date + '</span>',
 					'</th>',
 				'</tr>',
 				'<tr>' + html.join('') + '</tr>',
