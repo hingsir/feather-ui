@@ -11,7 +11,7 @@ if(typeof define == 'function'){
 })(window, function(){
 
 return {
-	REG: /(')|([\r\n]+)|<%(=?)(.*?)%>/g,
+	REG: /(')|([\r\n]+)|<%(=?)([\s\S]*?)%>/g,
 
 	fetch: function(id, data){
 		var elem = document.getElementById(id);

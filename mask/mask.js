@@ -17,7 +17,9 @@ var doc = document;
 function Mask(opt){
 	this.options = $.extend({
 		autoOpen: true,
-		container: doc.body
+		container: doc.body,
+		color: '#000',
+		opacity: 0.6
 	}, opt || {});
 
 	this.init();
@@ -31,7 +33,10 @@ Mask.prototype = {
 			!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
 		}
 		
-		self.mask = $('<div class="ui-mask">').hide().appendTo(self.container);
+		self.mask = $('<div class="ui-mask">').hide().css({
+			backgroundColor: self.options.color,
+			opacity: self.options.opacity
+		}).appendTo(self.container);
 
 		self.options.autoOpen && this.open();
 

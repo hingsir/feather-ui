@@ -62,7 +62,8 @@ PlaceHolder.prototype = {
 			this.placeholder = $('<input type="text" />').css({
 				width: $dom.innerWidth(),
 				height: $dom.innerHeight(),
-				lineHeight: $dom.innerHeight() + 'px'
+				lineHeight: $dom.innerHeight() + 'px',
+				background: 'transparent'
 			}).insertAfter($dom).addClass('ui-placeholder').click(function(){
 				$(this).hide();
 				$dom.focus();
@@ -81,5 +82,4 @@ PlaceHolder.CACHE = [];
 PlaceHolder.GID = 1;
 
 return PlaceHolder;
-
 });

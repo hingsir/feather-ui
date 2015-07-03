@@ -6,9 +6,10 @@
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
+	z-index: 10000;
 }
 
-.ui-suggestion-item, .ui-suggestion-title{
+.ui-suggestion-item, .ui-suggestion-header, .ui-suggestion-footer{
 	display: block;
 	text-indent: 5px;
 	width: 100%;
@@ -23,7 +24,7 @@
 	cursor: pointer;
 }
 
-.ui-suggestion-title{
+.ui-suggestion-header, .ui-suggestion-footer{
 	color: #0090e0;
 	display: none;
 }

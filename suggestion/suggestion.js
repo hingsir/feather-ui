@@ -23,11 +23,13 @@ function Suggestion(opts){
 		data: null,
 		delay: 300,
 		empty2close: true,
+		emptyNoCache: false,
 		kw: 'kw',
 		requestParams: {},
 		resultField: '',
 		match: null,
 		format: null,
+		build: function(){},
 		switchCallback: function(){},
 		callback: function(){},
 		cancel: function(){}
@@ -45,7 +47,7 @@ Suggestion.prototype = {
 
 		!/fixed|absolute/.test(self.parent.css('position')) && self.parent.css('position', 'relative');
 
-		self.suggest = $('<ul class="ui-suggestion"><li class="ui-suggestion-title"></li></ul>').appendTo(self.parent);
+		self.suggest = $('<ul class="ui-suggestion"><li class="ui-suggestion-header"></li><li class="ui-suggestion-footer"></li></ul>').appendTo(self.parent);
 		self.xhr = null;
 		self.tid = null;
 		self.index = null;
@@ -63,7 +65,7 @@ Suggestion.prototype = {
 				var $current = self.suggest.find('.ui-suggestion-active');
 
 				if($current.length){
-					self.setKw($current.attr('data-suggestion-kw'), true);
+					self.setKw($current.attr('data-suggestion-kw'), $current, true);
 				}
 
 				return self.close();
@@ -82,7 +84,7 @@ Suggestion.prototype = {
 		});
 
 		self.suggest.delegate('.ui-suggestion-item', 'click', function(){
-			self.setKw($(this).attr('data-suggestion-kw'), true);
+			self.setKw($(this).attr('data-suggestion-kw'), $(this), true);
 			self.close();
 		}).hover(function(){
 			over = true;
@@ -90,16 +92,16 @@ Suggestion.prototype = {
 			over = false;
 		});
 
-		self.suggest.find('.ui-suggestion-title').click(function(){
+		self.suggest.find('.ui-suggestion-header, .ui-suggestion-footer').click(function(){
 			self.dom.focus();
 		});
 	},
 
-	setKw: function(value, execCallback){
+	setKw: function(value, $item, execCallback){
 		var self = this;
 
 		self.dom.val(value);
-		execCallback && self.options.callback && self.options.callback.call(self, value);
+		execCallback && self.options.callback && self.options.callback.call(self, value, $item);
 	},
 
 	switchKw: function(e){
@@ -129,7 +131,7 @@ Suggestion.prototype = {
 		var kw = $item.attr('data-suggestion-kw');
 
 		self.setKw(kw);
-		self.options.switchCallback && self.options.switchCallback.call(self, kw);
+		self.options.switchCallback && self.options.switchCallback.call(self, kw, $item);
 		
 		e.preventDefault();
 	},
@@ -139,12 +141,26 @@ Suggestion.prototype = {
 	},
 
 	setTitle: function(title){
-		var $title = this.suggest.find('.ui-suggestion-title');
+		this.setHeader(title);
+	},
 
-		if(!title){
-			$title.hide();
+	setHeader: function(header){
+		var $header = this.suggest.find('.ui-suggestion-header');
+
+		if(!header){
+			$header.hide();
 		}else{
-			$title.html(title).show();
+			$header.html(header).show();
+		}
+	},
+
+	setFooter: function(footer){
+		var $footer = this.suggest.find('.ui-suggestion-footer');
+
+		if(!footer){
+			$footer.hide();
+		}else{
+			$footer.html(footer).show();
 		}
 	},
 
@@ -166,7 +182,7 @@ Suggestion.prototype = {
 				return;
 			}
 
-			var data = self.data, cache = opts.caching ? Suggestion.cache[kw] : false;
+			var data = self.data, cache = opts.caching && !(!$.trim(kw) && opts.emptyNoCache) ? Suggestion.cache[kw] : false;
 			
 			if(data && (data = self._match.call(self, data, kw)).length){
 				//if kw can be find in local data
@@ -184,7 +200,6 @@ Suggestion.prototype = {
 					}
 					
 					data = Suggestion.cache[kw] = self._match.call(self, data, kw);
-
 					self.build(data, kw);
 				});
 			}
@@ -219,14 +234,16 @@ Suggestion.prototype = {
 			self.close();
 		}else{
 			var html = '';
-
+			
 			$.each(data, function(key, item){
 				html += '<li class="ui-suggestion-item" data-suggestion-index="' + key + '" data-suggestion-kw="' + item + '">' + self.format(item, kw) + '</li>';
 			});
 
-			self.suggest.find('.ui-suggestion-item').remove().end().append(html);
-			self.items = self.suggest.find('.ui-suggestion-item');
+			self.items = $(html);
+			self.suggest.find('.ui-suggestion-item').remove().end().find('.ui-suggestion-header').after(self.items);
 			self.open();
+
+			opts.build && opts.build.call(self);
 		}
 	},
 

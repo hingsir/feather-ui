@@ -28,7 +28,7 @@ Tips.prototype = {
 	init: function(){
 		var self = this, opt = self.options;
 
-		Tips.destroy; Tips.instance = self;
+		Tips.destroy(); Tips.instance = self;
 
 		self.$ = new Dialog({
 			autoOpen: true,

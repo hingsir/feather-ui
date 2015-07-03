@@ -184,7 +184,7 @@ Dialog.prototype = {
 	setTitle: function(title){
 		var $header = this.container.find('.ui-dialog-header');
 
-		$header.removeClass('.ui-dialog-header-nob').show();
+		$header.removeClass('ui-dialog-header-nob').show();
 
 		if(title === false){
 			$header.hide();
