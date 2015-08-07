@@ -9,7 +9,7 @@ if(typeof define == 'function'){
     });
 }else{
     window.FeatherUi = window.FeatherUi || {};
-    window.FeatherUi.Class = factory(window.jQuery || window.$, window.FeatherUi.Mask);
+    window.FeatherUi.LightBox = factory(window.jQuery || window.$, window.FeatherUi.Mask);
 }
 })(window, function($, Mask){
 var doc = document, Math = window.Math;
