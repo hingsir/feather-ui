@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>template</title>
+
+<head>
+<body>
+	<script type="text/html" id="user_tmpl">
+	  <% for ( var i = 0; i < users.length; i++ ) { %>
+	    <li><a href="<%=users[i].url%>"><%=users[i].name%></a></li>
+	  <% } %>
+	</script>
+	<div id='results'></div>
+	<script type="text/javascript" src='template.js'></script>
+	<script type="text/javascript">
+
+		var users = [{
+			name:'chexingyou',
+			url:'http://chexingyou.sinaapp.com'
+		},{
+			name:'hingsir',
+			url:'https://github.com/hingsir'
+		}]
+
+		var results = document.getElementById("results");
+		results.innerHTML = FeatherUi.Template.parse(document.getElementById("user_tmpl").innerHTML, users);
+	</script>
+</body>
+</html>
